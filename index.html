@@ -1,25 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Tools Dev Preview</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Tools Deployment Center</title>
     <style>
-        body { font-family: sans-serif; padding: 40px; background: #f8fafc; color: #0f172a; }
-        h1 { font-size: 24px; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 12px 0; }
-        a { color: #2563eb; text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
+      :root {
+        color: #111;
+        background: #f7f7f5;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.94), transparent 36%),
+          rgba(247, 247, 245, 1);
+        color: #111;
+      }
+
+      .page-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 3rem;
+      }
+
+      .page-header {
+        margin-bottom: 3rem;
+      }
+
+      .page-title {
+        margin: 0 0 0.5rem 0;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: #111;
+      }
+
+      .page-copy {
+        margin: 0;
+        max-width: 760px;
+        color: #4d4d4c;
+        font-size: 1.05rem;
+      }
+
+      .project-description-box {
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px dashed rgba(17, 17, 17, 0.12);
+        border-radius: 20px;
+        padding: 1.5rem;
+        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
+        color: #4d4d4c;
+      }
+
+      .project-description-box p {
+        margin: 0;
+      }
+
+      .component-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .component-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.25rem;
+        padding: 1.75rem;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        box-shadow: 0 18px 50px rgba(17, 17, 17, 0.04);
+        transition: transform 200ms ease, box-shadow 200ms ease;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .component-card:hover, .component-card:focus-within {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 60px rgba(17, 17, 17, 0.08);
+        outline: none;
+      }
+
+      .component-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .component-tag {
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(91, 143, 255, 0.12);
+        color: #1c3a8a;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .component-tag.data {
+        background: rgba(16, 185, 129, 0.12);
+        color: #065f46;
+      }
+
+      .component-arrow {
+        color: #6b6b6a;
+        font-size: 1.2rem;
+        transition: transform 150ms ease;
+      }
+
+      .component-card:hover .component-arrow {
+        transform: translateX(4px);
+        color: #111;
+      }
+
+      .component-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        line-height: 1.35;
+        color: #111;
+      }
+
+      .component-desc {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #4d4d4c;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 640px) {
+        .page-shell {
+          padding: 1.5rem 1rem 2rem;
+        }
+        .component-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
-</head>
-<body>
-    <h1>Music Business Course Tools Preview</h1>
-    <p>Select a component to preview it full-screen:</p>
-    <ul>
-        <li>👉 <a href="marquee.html">Preview News Marquee Ticker (marquee.html)</a></li>
-        <li>👉 <a href="feed.html">Preview Full News Grid Dashboard (feed.html)</a></li>
-        <li>👉 <a href="news.json">View Live Aggregated Data Feed (news.json)</a></li>
-    </ul>
-</body>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="page-header">
+        <h1 class="page-title">Course Assets Deployment</h1>
+        <p class="page-copy">
+          Welcome to the control and preview gateway for the Music Business asynchronous course integration tools. These serverless utilities stream high-fidelity trade environments straight into Canvas LMS.
+        </p>
+      </header>
+
+      <!-- Short Tool Description Box -->
+      <section class="project-description-box" aria-label="Tool Information">
+        <p>
+          <strong>How this works:</strong> A background automated GitHub Action updates this repository every 4 hours, scraping live RSS data models directly from <em>Billboard</em>, <em>Music Business Worldwide</em>, and <em>Digital Music News</em>. This data populates a static <code>news.json</code> payload, completely bypassing typical browser CORS security restrictions and delivering real-time, zero-maintenance topical touchpoints inside Canvas iFrames.
+        </p>
+      </section>
+
+      <!-- Navigation/Preview Card Grid -->
+      <section class="component-grid" aria-label="Deployment Assets">
+        
+        <!-- Marquee Ticker Link Card -->
+        <a href="marquee.html" class="component-card">
+          <div>
+            <div class="component-meta">
+              <span class="component-tag">LMS Component</span>
+              <span class="component-arrow" aria-hidden="true">→</span>
+            </div>
+            <h2 class="component-title" style="margin-top: 1rem;">Horizontal News Ticker</h2>
+            <p class="component-desc">A lightweight, continuous scrolling headline track built with pause-on-hover mechanics for WCAG 2.1 compliance. Perfect for Canvas Home Page inclusion banners.</p>
+          </div>
+        </a>
+
+        <!-- Full Grid Dashboard Link Card -->
+        <a href="feed.html" class="component-card">
+          <div>
+            <div class="component-meta">
+              <span class="component-tag">LMS Component</span>
+              <span class="component-arrow" aria-hidden="true">→</span>
+            </div>
+            <h2 class="component-title" style="margin-top: 1rem;">Headline Grid Dashboard</h2>
+            <p class="component-desc">The full-page workspace for search filters and trade cards. Designed to embedded directly within a module page to assist students in sourcing their Weekly Decision Memos.</p>
+          </div>
+        </a>
+
+        <!-- Live JSON Data Link Card -->
+        <a href="news.json" class="component-card" target="_blank">
+          <div>
+            <div class="component-meta">
+              <span class="component-tag data">Data Stream</span>
+              <span class="component-arrow" aria-hidden="true">→</span>
+            </div>
+            <h2 class="component-title" style="margin-top: 1rem;">news.json Feed Output</h2>
+            <p class="component-desc">Inspect the raw, sanitized chronological output arrays compiled by the Python GitHub automated scraping loop. Useful for system checking or verifying timestamps.</p>
+          </div>
+        </a>
+
+      </section>
+    </main>
+  </body>
 </html>
