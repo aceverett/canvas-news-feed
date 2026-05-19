@@ -1,5 +1,8 @@
 name: Update RSS News
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 */4 * * *'
