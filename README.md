@@ -18,12 +18,8 @@ The marquee is built to be embedded in Canvas or any other LMS using an `<iframe
 
 Open the demo in your browser:
 
-- [Live demo page](./index.html)
+- [Live demo page](https://aceverett.github.io/canvas-news-feed/)
 
-Or preview the marquee component directly:
-
-- [Marquee ticker](./marquee.html)
-- [Full news dashboard](./feed.html)
 
 ## Forking and Reusing
 
