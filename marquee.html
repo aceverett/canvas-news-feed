@@ -177,6 +177,20 @@
         }
       }
 
+      async function applyConfig() {
+        try {
+          const response = await fetch('config.json', { cache: 'no-cache' });
+          if (!response.ok) return;
+          const config = await response.json();
+          const titleEl = document.querySelector('.marquee-title');
+          if (titleEl) titleEl.textContent = config.project_title || titleEl.textContent;
+          if (config.project_title) document.title = config.project_title;
+        } catch (err) {
+          console.debug('applyConfig error', err);
+        }
+      }
+
+      applyConfig();
       loadNews();
     </script>
   </body>

@@ -1,0 +1,14 @@
+{
+  "project_title": "Headline Dashboard",
+  "project_description": "Browse the latest headlines compiled from multiple sources in one clean, responsive grid.",
+  "feeds": [
+    {
+      "name": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/feed/"
+    },
+    {
+      "name": "Billboard",
+      "url": "https://www.billboard.com/feed/"
+    }
+  ]
+}

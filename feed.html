@@ -292,6 +292,23 @@
       }
 
       searchInput.addEventListener('input', handleFilter);
+      async function applyConfig() {
+        try {
+          const response = await fetch('config.json', { cache: 'no-cache' });
+          if (!response.ok) return;
+          const config = await response.json();
+          const titleEl = document.querySelector('.page-title');
+          if (titleEl) titleEl.textContent = config.project_title || titleEl.textContent;
+          const copyEl = document.querySelector('.page-copy');
+          if (copyEl) copyEl.textContent = config.project_description || copyEl.textContent;
+          if (config.project_title) document.title = config.project_title;
+        } catch (err) {
+          // silently ignore config errors
+          console.debug('applyConfig error', err);
+        }
+      }
+
+      applyConfig();
       loadNews();
     </script>
   </body>
