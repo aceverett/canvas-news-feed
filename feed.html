@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Feed Dashboard</title>
+    <style>
+      :root {
+        color: #111;
+        background: #f7f7f5;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.94), transparent 36%),
+          rgba(247, 247, 245, 1);
+        color: #111;
+      }
+
+      .page-shell {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 3rem;
+      }
+
+      .page-header {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .page-title {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: #111;
+      }
+
+      .page-copy {
+        margin: 0;
+        max-width: 720px;
+        color: #4d4d4c;
+        font-size: 1rem;
+      }
+
+      .search-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .search-bar label {
+        display: block;
+        font-size: 0.95rem;
+        color: #4d4d4c;
+      }
+
+      .search-field {
+        width: 100%;
+        max-width: 520px;
+        min-width: 0;
+        padding: 0.95rem 1rem;
+        border: 1px solid #d8d7d4;
+        border-radius: 16px;
+        background: #fff;
+        color: #111;
+        font-size: 1rem;
+        box-shadow: inset 0 1px 2px rgba(17, 17, 17, 0.05);
+      }
+
+      .search-field:focus {
+        outline: 2px solid #5b8cff;
+        outline-offset: 2px;
+        border-color: #8ea7ff;
+      }
+
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .news-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        box-shadow: 0 18px 50px rgba(17, 17, 17, 0.04);
+        min-height: 180px;
+      }
+
+      .news-card:hover {
+        transform: translateY(-1px);
+        transition: transform 180ms ease;
+      }
+
+      .news-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .news-source {
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(91, 143, 255, 0.12);
+        color: #1c3a8a;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .news-date {
+        color: #6b6b6a;
+        font-size: 0.92rem;
+        white-space: nowrap;
+      }
+
+      .news-title {
+        margin: 0;
+        font-size: 1.06rem;
+        font-weight: 600;
+        line-height: 1.45;
+        color: #111;
+      }
+
+      .news-title a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .news-title a:hover,
+      .news-title a:focus-visible {
+        text-decoration: underline;
+        outline: none;
+      }
+
+      .news-empty {
+        grid-column: 1 / -1;
+        padding: 3rem 1rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px dashed rgba(17, 17, 17, 0.12);
+        color: #4d4d4c;
+        text-align: center;
+      }
+
+      @media (max-width: 520px) {
+        .page-shell {
+          padding: 1.5rem 1rem 2rem;
+        }
+
+        .search-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .news-card {
+          padding: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="page-header">
+        <div>
+          <h1 class="page-title">Headline dashboard</h1>
+          <p class="page-copy">Browse the latest headlines from Billboard and Music Business Worldwide in one clean, responsive grid. Use the search bar to filter stories instantly.</p>
+        </div>
+        <div class="search-bar">
+          <label for="searchInput">Search headlines</label>
+          <input type="search" id="searchInput" class="search-field" placeholder="Filter by keyword…" aria-label="Filter headlines" />
+        </div>
+      </header>
+
+      <section aria-labelledby="dashboardHeading">
+        <h2 id="dashboardHeading" class="visually-hidden">News cards</h2>
+        <div class="news-grid" id="newsGrid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script>
+      const newsGrid = document.getElementById('newsGrid');
+      const searchInput = document.getElementById('searchInput');
+      let newsItems = [];
+
+      function formatDate(value) {
+        const date = new Date(value);
+        return date.toLocaleDateString(undefined, {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+
+      function createCard(item) {
+        const article = document.createElement('article');
+        article.className = 'news-card';
+
+        const meta = document.createElement('div');
+        meta.className = 'news-meta';
+
+        const source = document.createElement('span');
+        source.className = 'news-source';
+        source.textContent = item.source;
+
+        const date = document.createElement('time');
+        date.className = 'news-date';
+        date.dateTime = item.date;
+        date.textContent = formatDate(item.date);
+
+        meta.append(source, date);
+
+        const title = document.createElement('h3');
+        title.className = 'news-title';
+
+        const link = document.createElement('a');
+        link.href = item.link;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = item.title;
+        link.setAttribute('aria-label', `${item.title}, from ${item.source}`);
+
+        title.appendChild(link);
+        article.append(meta, title);
+        return article;
+      }
+
+      function renderCards(items) {
+        newsGrid.innerHTML = '';
+        if (!items.length) {
+          const emptyState = document.createElement('div');
+          emptyState.className = 'news-empty';
+          emptyState.textContent = 'No headlines match your search. Try a different keyword.';
+          newsGrid.appendChild(emptyState);
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        items.forEach((item) => fragment.appendChild(createCard(item)));
+        newsGrid.appendChild(fragment);
+      }
+
+      function handleFilter() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (!query) {
+          renderCards(newsItems);
+          return;
+        }
+
+        const filtered = newsItems.filter((item) => {
+          return item.title.toLowerCase().includes(query) || item.source.toLowerCase().includes(query);
+        });
+
+        renderCards(filtered);
+      }
+
+      async function loadNews() {
+        try {
+          const response = await fetch('news.json', { cache: 'no-cache' });
+          if (!response.ok) throw new Error('Unable to load news');
+
+          const items = await response.json();
+          newsItems = Array.isArray(items) ? items : [];
+          renderCards(newsItems);
+        } catch (error) {
+          console.error(error);
+          const emptyState = document.createElement('div');
+          emptyState.className = 'news-empty';
+          emptyState.textContent = 'Unable to load headlines. Please try again later.';
+          newsGrid.appendChild(emptyState);
+        }
+      }
+
+      searchInput.addEventListener('input', handleFilter);
+      loadNews();
+    </script>
+  </body>
+</html>
