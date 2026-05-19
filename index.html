@@ -141,6 +141,40 @@
         line-height: 1.5;
       }
 
+      .btn-fork {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(91, 143, 255, 0.12);
+  color: #1c3a8a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 16px;
+  border: 1px solid rgba(91, 143, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(91, 143, 255, 0.04);
+  transition: transform 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+  width: fit-content;
+  margin-top: 0.5rem;
+}
+
+.btn-fork:hover {
+  background-color: rgba(91, 143, 255, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(91, 143, 255, 0.1);
+}
+
+.btn-fork:focus-visible {
+  outline: 2px solid #5b8cff;
+  outline-offset: 2px;
+}
+
+.btn-fork .btn-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
       @media (max-width: 640px) {
         .page-shell {
           padding: 1.5rem 1rem 2rem;
@@ -158,6 +192,10 @@
         <p class="page-copy">
           Welcome to this demo of a news marquee tool, which can be embedded into an LMS using iframes. This demo is currently configured for a Music Business curriculum, but the layout adapts automatically to any field by editing a single configuration file.
         </p>
+        <a href="https://github.com/aceverett/canvas-news-feed/fork" class="btn-fork" target="_blank" rel="noopener">
+  <span class="btn-emoji" aria-hidden="true">🍴</span>
+  Fork This Template on GitHub
+</a>
       </header>
 
       <!-- Short Tool Description Box -->
