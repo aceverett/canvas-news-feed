@@ -123,46 +123,6 @@
           animation: none;
         }
       }
-
-      /* 📱 MOBILE APP & TOUCH VIEW OVERRIDES */
-      @media (max-width: 768px), (pointer: coarse) {
-        body {
-          padding: 0.25rem;
-        }
-
-        .marquee-frame {
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-        }
-
-        .marquee-track {
-          animation: none !important;
-          width: auto;
-          display: flex;
-          gap: 1.5rem;
-          padding: 0.5rem 0;
-        }
-
-        .scroll-content {
-          display: flex;
-          gap: 1.5rem;
-          padding-right: 0;
-        }
-
-        .scroll-content[aria-hidden="true"] {
-          display: none !important;
-        }
-
-        .marquee-item {
-          scroll-snap-align: start;
-          flex-shrink: 0;
-          background: rgba(17, 17, 17, 0.03);
-          padding: 0.5rem 0.75rem;
-          border-radius: 10px;
-          border: 1px solid rgba(17, 17, 17, 0.05);
-        }
-      }
     </style>
   </head>
   <body>
