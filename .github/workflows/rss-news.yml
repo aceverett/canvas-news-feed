@@ -3,6 +3,10 @@ name: Update RSS News
 permissions:
   contents: write
 
+# This tells GitHub to ignore the old Node 20 stuff and use Node 24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   schedule:
     - cron: '0 */4 * * *'
@@ -38,7 +42,7 @@ jobs:
           if [[ -n "$(git status --porcelain news.json)" ]]; then
             git add news.json
             git commit -m 'Update RSS news.json'
-            git push origin HEAD:refs/heads/${GITHUB_REF##*/}
+            git push
           else
             echo "No changes to commit."
           fi
